@@ -1,4 +1,9 @@
 {
+	"name": "madewithlove/runkeeper",
+	"type": "library",
+	"description": "PHP wrapper for Runkeeper Health Graph API",
+	"keywords": ["runkeeper"],
+	"homepage": "http://github.com/madewithlove/runkeeper",
 	"require": {
 		"deresh/sfyaml": "dev-master"
 	}
