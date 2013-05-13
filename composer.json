@@ -6,5 +6,8 @@
 	"homepage": "http://github.com/madewithlove/runkeeper",
 	"require": {
 		"deresh/sfyaml": "dev-master"
+	},
+	"autoload": {
+		"files": ["lib/runkeeperAPI.class.php"]
 	}
 }
