@@ -1,7 +1,11 @@
 <?php
 error_reporting(E_ERROR);
 
-require(__DIR__ . '/../lib/runkeeperAPI.class.php');
+// Include dependencies with composer
+require_once('../vendor/autoload.php');
+
+// Include the API wrapper
+require_once('../lib/runkeeperAPI.class.php');
 
 /* API initialization */
 $rkAPI = new RunKeeperAPI(

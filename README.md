@@ -2,7 +2,7 @@
 
 PHP wrapper for Runkeeper Health Graph API
 
-**Version:** 0.3.4
+**Version:** 0.3.5
 
 **Author:** Pierre RASO - eX Nihili <pierre@exnihili.com>
 
@@ -10,7 +10,7 @@ PHP wrapper for Runkeeper Health Graph API
 
 Add this to you `composer.json` file, in the require object;
 
-    "madewithlove/runkeeper": "v0.3.*"
+    "madewithlove/runkeeper": "0.3.*"
 
 After that, run `composer install` to install the RunKeeper API wrapper.
 
@@ -26,9 +26,14 @@ See /usage/rk-api.sample.php
 
 ## ChangeLog :
 
+### v0.3.5 (2013-05-13)
+
+* Removed unneeded include
+
 ### v0.3.4 (2013-05-13)
 
 * Updated composer.json file, posted to [packagist.org](https://packagist.org/)
+* Added autoload statement for runkeeperAPI.class.php
 
 ### v0.3.3 (2013-05-13)
 

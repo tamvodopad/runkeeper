@@ -1,8 +1,5 @@
 <?php
 
-// Include dependencies with composer
-require_once('../vendor/autoload.php');
-
 class RunKeeperAPI {
 	private $client_id;
 	private $client_secret;
