@@ -85,11 +85,11 @@ class RunKeeperAPI {
 			$this->api_last_error = "getRunkeeperToken: bad response";
 			return(false);
 		}
-		elseif (!$decoderesponse->error) {
-			if ($decoderesponse->access_token) {
+		elseif (!isset($decoderesponse->error)) {
+			if (isset($decoderesponse->access_token)) {
 				$this->access_token = $decoderesponse->access_token;
 			}
-			if ($decoderesponse->token_type) {
+			if (isset($decoderesponse->token_type)) {
 				$this->token_type = $decoderesponse->token_type;
 			}
 			return(true);
@@ -101,7 +101,7 @@ class RunKeeperAPI {
 		else {
 			$this->api_last_error = "getRunkeeperToken: ".$decoderesponse->error;
 			return(false);
-			
+
 		}
 	}
 
@@ -112,11 +112,11 @@ class RunKeeperAPI {
 	public function doRunkeeperRequest($name, $type, $fields=null, $url=null, $optparams=null) {
 		$this->requestRedirectUrl = null;
 		$orig = microtime(true);
-		if (!$name || !$this->api_conf->Interfaces->$name) {
-			$this->api_last_error = "doRunkeeperRequest: wrong or missing Interface name";
+		if (empty($name) || !isset($this->api_conf->Interfaces->$name)) {
+			$this->api_last_error = "doRunkeeperRequest: wrong or missing Interface name : " . $name;
 			return(false);
 		}
-		elseif (!$type || !$this->api_conf->Interfaces->$name->$type) {
+		elseif (!$type || !isset($this->api_conf->Interfaces->$name->$type)) {
 			$this->api_last_error = "doRunkeeperRequest: not supported or missing type (Read, Update, Create or Delete)";
 			return(false);
 		}
@@ -201,17 +201,17 @@ class RunKeeperAPI {
 				if ($responsecode === 200) {
 					$response = htmlentities($response,ENT_NOQUOTES);
 					$decoderesponse = json_decode($response);
-					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => 200, 'time' => microtime(true)-$orig);
+					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => 200, 'responsecode' => $responsecode, 'time' => microtime(true)-$orig);
 					return($decoderesponse);
 				}
 
 				elseif (in_array($responsecode, array('201','204','301','304'))) {
-					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => $responsecoce, 'time' => microtime(true)-$orig);
+					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => $responsecode, 'responsecode' => $responsecode, 'time' => microtime(true)-$orig);
 					return true;
 				}
 				else {
 					$this->api_last_error = "doRunkeeperRequest: request error => 'name' : ".$name.", 'type' : ".$type.", 'result' : ".$responsecode.", '".$name."' => ".$url;
-					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => 'error : '.$responsecode, 'time' => microtime(true)-$orig);
+					$this->api_request_log[] = array('name' => $name, 'type' => $type, 'result' => 'error : '.$responsecode, 'responsecode' => $responsecode, 'time' => microtime(true)-$orig);
 					return false;
 				}
 			}
