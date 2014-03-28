@@ -5,7 +5,7 @@
 	"keywords": ["runkeeper"],
 	"homepage": "http://github.com/madewithlove/runkeeper",
 	"require": {
-		"deresh/sfyaml": "dev-master"
+		"deresh/yaml": "dev-master"
 	},
 	"autoload": {
 		"files": ["lib/runkeeperAPI.class.php"]
