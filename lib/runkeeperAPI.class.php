@@ -20,40 +20,27 @@ class RunKeeperAPI {
 
 	public function __construct($api_conf_file) {
 		$this->api_conf_file = $api_conf_file;
-		if (!class_exists('Symfony\Component\Yaml\Yaml')) {
-			$this->api_last_error = "Symfony YAML (https://github.com/symfony/yaml) not found or misconfigured";
-			$this->api_created = false;
-		}
-		elseif (!function_exists('curl_init')) {
-			$this->api_last_error = "No support found for cURL (http://www.php.net/manual/en/book.curl.php)";
-			$this->api_created = false;
-		}
-		elseif (!function_exists('json_decode') || !function_exists('json_encode')) {
-			$this->api_last_error = "No support found for json (http://fr2.php.net/manual/en/book.json.php)";
-			$this->api_created = false;
-		}
-		else {
-			try {
-				if (!file_exists($api_conf_file) || !is_file($api_conf_file) || !is_readable($api_conf_file)) {
-					$this->api_last_error = "Unable to find/read the YAML api_conf_file : $api_conf_file";
-					$this->api_created = false;
-				}
-				else {
-					$values = Yaml::parse(file_get_contents($api_conf_file));
-					$this->api_conf = json_decode(json_encode($values));
-					$this->client_id = $this->api_conf->App->client_id;
-					$this->client_secret = $this->api_conf->App->client_secret;
-					$this->auth_url = $this->api_conf->App->auth_url;
-					$this->access_token_url = $this->api_conf->App->access_token_url;
-					$this->redirect_uri = $this->api_conf->App->redirect_uri;
-					$this->api_base_url = $this->api_conf->App->api_base_url;
-					$this->api_created = true;
-				}
-			}
-			catch (ParseException $e) {
-				$this->api_last_error = "Unable to parse the YAML string: ".$e->getMessage();
+
+		try {
+			if (!file_exists($api_conf_file) || !is_file($api_conf_file) || !is_readable($api_conf_file)) {
+				$this->api_last_error = "Unable to find/read the YAML api_conf_file : $api_conf_file";
 				$this->api_created = false;
 			}
+			else {
+				$values = Yaml::parse(file_get_contents($api_conf_file));
+				$this->api_conf = json_decode(json_encode($values));
+				$this->client_id = $this->api_conf->App->client_id;
+				$this->client_secret = $this->api_conf->App->client_secret;
+				$this->auth_url = $this->api_conf->App->auth_url;
+				$this->access_token_url = $this->api_conf->App->access_token_url;
+				$this->redirect_uri = $this->api_conf->App->redirect_uri;
+				$this->api_base_url = $this->api_conf->App->api_base_url;
+				$this->api_created = true;
+			}
+		}
+		catch (ParseException $e) {
+			$this->api_last_error = "Unable to parse the YAML string: ".$e->getMessage();
+			$this->api_created = false;
 		}
 	}
 
