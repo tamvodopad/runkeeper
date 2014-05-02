@@ -73,7 +73,7 @@ class RunKeeperAPI {
 			'code'		=>	$authorization_code,
 			'client_id'	=>	$this->client_id,
 			'client_secret'	=>	$this->client_secret,
-			'redirect_uri'	=>	($redirect_uri == '' ? $this->redirect_uri : $redirecturi)
+			'redirect_uri'	=>	($redirect_uri == '' ? $this->redirect_uri : $redirect_uri)
 		));
 		$options = array(
 			CURLOPT_URL		=>	$this->access_token_url,
