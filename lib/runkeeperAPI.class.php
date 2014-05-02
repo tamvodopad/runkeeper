@@ -18,6 +18,11 @@ class RunKeeperAPI {
 	public $requestRedirectUrl = null;
 	public $api_request_log = null;
 
+	/**
+	 * Build a new instnace of RunKeeperAPI
+	 *
+	 * @param string $api_conf_file Path to the configuration file
+	 */
 	public function __construct($api_conf_file) {
 		$this->api_conf_file = $api_conf_file;
 
@@ -44,11 +49,24 @@ class RunKeeperAPI {
 		}
 	}
 
+	/**
+	 * Get the URL for the login button
+	 *
+	 * @return string
+	 */
 	public function connectRunkeeperButtonUrl () {
 		$url = $this->auth_url.'?response_type=code&client_id='.$this->client_id.'&redirect_uri='.urlencode($this->redirect_uri);
 		return($url);
 	}
 
+	/**
+	 * Get the token from the authorization code
+	 *
+	 * @param string $authorization_code
+	 * @param string $redirect_uri
+	 *
+	 * @return string
+	 */
 	public function getRunkeeperToken ($authorization_code, $redirect_uri='') {
 		$params = http_build_query(array(
 			'grant_type'	=>	'authorization_code',
@@ -93,10 +111,26 @@ class RunKeeperAPI {
 		}
 	}
 
+	/**
+	 * Set the token to use
+	 *
+	 * @param string $access_token
+	 */
 	public function setRunkeeperToken ($access_token) {
 		$this->access_token = $access_token;
 	}
 
+	/**
+	 * Do a request on the API
+	 *
+	 * @param string $name
+	 * @param string $type
+	 * @param array  $fields
+	 * @param string $url
+	 * @param array  $optparams
+	 *
+	 * @return array
+	 */
 	public function doRunkeeperRequest($name, $type, $fields=null, $url=null, $optparams=null) {
 		$this->requestRedirectUrl = null;
 		$orig = microtime(true);
@@ -206,9 +240,19 @@ class RunKeeperAPI {
 		}
 	}
 
-	private function parseHeader ($curl,$header) {
-		if (strstr($header,'Location: '))
+	/**
+	 * Parse an header
+	 *
+	 * @param resource $curl
+	 * @param string $header
+	 *
+	 * @return integer
+	 */
+	private function parseHeader ($curl, $header) {
+		if (strstr($header,'Location: ')) {
 			$this->requestRedirectUrl = substr($header, 10, strlen($header)-12);
+		}
+
 		return strlen($header);
 	}
 }
