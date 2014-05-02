@@ -2,7 +2,7 @@
 
 PHP wrapper for Runkeeper Health Graph API
 
-**Version:** 0.3.5
+**Version:** 0.3.6
 
 **Author:** Pierre RASO - eX Nihili <pierre@exnihili.com>
 
