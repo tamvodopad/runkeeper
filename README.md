@@ -16,7 +16,7 @@ After that, run `composer install` to install the RunKeeper API wrapper.
 
 ## Dependencies
 
-* sfYaml (https://github.com/fabpot/yaml) - Installed via Composer
+* Symfony YAML (https://github.com/symfony/yaml) - Installed via Composer
 * PHP cURL support (http://www.php.net/manual/en/book.curl.php)
 * PHP json support (http://fr2.php.net/manual/en/book.json.php)
 
@@ -25,6 +25,11 @@ After that, run `composer install` to install the RunKeeper API wrapper.
 See /usage/rk-api.sample.php
 
 ## ChangeLog :
+
+### v0.3.6 (2014-05-02)
+
+* Use Symfony 2's YAML component instead of Symfony 1's
+* Constraint extension dependencies via Composer
 
 ### v0.3.5 (2013-05-13)
 

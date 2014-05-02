@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
 class RunKeeperAPI {
 	private $client_id;
@@ -18,8 +20,8 @@ class RunKeeperAPI {
 
 	public function __construct($api_conf_file) {
 		$this->api_conf_file = $api_conf_file;
-		if (!class_exists('sfYamlParser')) {
-			$this->api_last_error = "Symfony YAML (https://github.com/fabpot/yaml) not found or misconfigured";
+		if (!class_exists('Symfony\Component\Yaml\Yaml')) {
+			$this->api_last_error = "Symfony YAML (https://github.com/symfony/yaml) not found or misconfigured";
 			$this->api_created = false;
 		}
 		elseif (!function_exists('curl_init')) {
@@ -32,13 +34,12 @@ class RunKeeperAPI {
 		}
 		else {
 			try {
-				$yaml = new sfYamlParser();
 				if (!file_exists($api_conf_file) || !is_file($api_conf_file) || !is_readable($api_conf_file)) {
 					$this->api_last_error = "Unable to find/read the YAML api_conf_file : $api_conf_file";
 					$this->api_created = false;
 				}
 				else {
-					$values = $yaml->parse(file_get_contents($api_conf_file));
+					$values = Yaml::parse(file_get_contents($api_conf_file));
 					$this->api_conf = json_decode(json_encode($values));
 					$this->client_id = $this->api_conf->App->client_id;
 					$this->client_secret = $this->api_conf->App->client_secret;
@@ -49,7 +50,7 @@ class RunKeeperAPI {
 					$this->api_created = true;
 				}
 			}
-			catch (InvalidArgumentException $e) {
+			catch (ParseException $e) {
 				$this->api_last_error = "Unable to parse the YAML string: ".$e->getMessage();
 				$this->api_created = false;
 			}

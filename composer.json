@@ -5,7 +5,7 @@
 	"keywords": ["runkeeper"],
 	"homepage": "http://github.com/madewithlove/runkeeper",
 	"require": {
-		"deresh/yaml": "dev-master"
+		"symfony/yaml": "2.4.*"
 	},
 	"autoload": {
 		"files": ["lib/runkeeperAPI.class.php"]
