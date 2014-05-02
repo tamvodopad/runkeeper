@@ -5,9 +5,12 @@
 	"keywords": ["runkeeper"],
 	"homepage": "http://github.com/madewithlove/runkeeper",
 	"require": {
-		"deresh/yaml": "dev-master"
+		"symfony/yaml": "2.4.*",
+		"ext-json": "*",
+		"ext-curl": "*"
 	},
 	"autoload": {
-		"files": ["lib/runkeeperAPI.class.php"]
+		"files": ["lib/runkeeperAPI.class.php"],
+		"classmap": ["tests"]
 	}
 }

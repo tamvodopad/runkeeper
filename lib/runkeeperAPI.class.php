@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
 class RunKeeperAPI {
 	private $client_id;
@@ -16,58 +18,62 @@ class RunKeeperAPI {
 	public $requestRedirectUrl = null;
 	public $api_request_log = null;
 
+	/**
+	 * Build a new instnace of RunKeeperAPI
+	 *
+	 * @param string $api_conf_file Path to the configuration file
+	 */
 	public function __construct($api_conf_file) {
 		$this->api_conf_file = $api_conf_file;
-		if (!class_exists('sfYamlParser')) {
-			$this->api_last_error = "Symfony YAML (https://github.com/fabpot/yaml) not found or misconfigured";
-			$this->api_created = false;
-		}
-		elseif (!function_exists('curl_init')) {
-			$this->api_last_error = "No support found for cURL (http://www.php.net/manual/en/book.curl.php)";
-			$this->api_created = false;
-		}
-		elseif (!function_exists('json_decode') || !function_exists('json_encode')) {
-			$this->api_last_error = "No support found for json (http://fr2.php.net/manual/en/book.json.php)";
-			$this->api_created = false;
-		}
-		else {
-			try {
-				$yaml = new sfYamlParser();
-				if (!file_exists($api_conf_file) || !is_file($api_conf_file) || !is_readable($api_conf_file)) {
-					$this->api_last_error = "Unable to find/read the YAML api_conf_file : $api_conf_file";
-					$this->api_created = false;
-				}
-				else {
-					$values = $yaml->parse(file_get_contents($api_conf_file));
-					$this->api_conf = json_decode(json_encode($values));
-					$this->client_id = $this->api_conf->App->client_id;
-					$this->client_secret = $this->api_conf->App->client_secret;
-					$this->auth_url = $this->api_conf->App->auth_url;
-					$this->access_token_url = $this->api_conf->App->access_token_url;
-					$this->redirect_uri = $this->api_conf->App->redirect_uri;
-					$this->api_base_url = $this->api_conf->App->api_base_url;
-					$this->api_created = true;
-				}
-			}
-			catch (InvalidArgumentException $e) {
-				$this->api_last_error = "Unable to parse the YAML string: ".$e->getMessage();
+
+		try {
+			if (!file_exists($api_conf_file) || !is_file($api_conf_file) || !is_readable($api_conf_file)) {
+				$this->api_last_error = "Unable to find/read the YAML api_conf_file : $api_conf_file";
 				$this->api_created = false;
 			}
+			else {
+				$values = Yaml::parse($api_conf_file);
+				$this->api_conf = json_decode(json_encode($values));
+				$this->client_id = $this->api_conf->App->client_id;
+				$this->client_secret = $this->api_conf->App->client_secret;
+				$this->auth_url = $this->api_conf->App->auth_url;
+				$this->access_token_url = $this->api_conf->App->access_token_url;
+				$this->redirect_uri = $this->api_conf->App->redirect_uri;
+				$this->api_base_url = $this->api_conf->App->api_base_url;
+				$this->api_created = true;
+			}
+		}
+		catch (ParseException $e) {
+			$this->api_last_error = "Unable to parse the YAML string: ".$e->getMessage();
+			$this->api_created = false;
 		}
 	}
 
+	/**
+	 * Get the URL for the login button
+	 *
+	 * @return string
+	 */
 	public function connectRunkeeperButtonUrl () {
 		$url = $this->auth_url.'?response_type=code&client_id='.$this->client_id.'&redirect_uri='.urlencode($this->redirect_uri);
 		return($url);
 	}
 
+	/**
+	 * Get the token from the authorization code
+	 *
+	 * @param string $authorization_code
+	 * @param string $redirect_uri
+	 *
+	 * @return string
+	 */
 	public function getRunkeeperToken ($authorization_code, $redirect_uri='') {
 		$params = http_build_query(array(
 			'grant_type'	=>	'authorization_code',
 			'code'		=>	$authorization_code,
 			'client_id'	=>	$this->client_id,
 			'client_secret'	=>	$this->client_secret,
-			'redirect_uri'	=>	($redirect_uri == '' ? $this->redirect_uri : $redirecturi)
+			'redirect_uri'	=>	($redirect_uri == '' ? $this->redirect_uri : $redirect_uri)
 		));
 		$options = array(
 			CURLOPT_URL		=>	$this->access_token_url,
@@ -105,10 +111,26 @@ class RunKeeperAPI {
 		}
 	}
 
+	/**
+	 * Set the token to use
+	 *
+	 * @param string $access_token
+	 */
 	public function setRunkeeperToken ($access_token) {
 		$this->access_token = $access_token;
 	}
 
+	/**
+	 * Do a request on the API
+	 *
+	 * @param string $name
+	 * @param string $type
+	 * @param array  $fields
+	 * @param string $url
+	 * @param array  $optparams
+	 *
+	 * @return array
+	 */
 	public function doRunkeeperRequest($name, $type, $fields=null, $url=null, $optparams=null) {
 		$this->requestRedirectUrl = null;
 		$orig = microtime(true);
@@ -218,9 +240,19 @@ class RunKeeperAPI {
 		}
 	}
 
-	private function parseHeader ($curl,$header) {
-		if (strstr($header,'Location: '))
+	/**
+	 * Parse an header
+	 *
+	 * @param resource $curl
+	 * @param string $header
+	 *
+	 * @return integer
+	 */
+	private function parseHeader ($curl, $header) {
+		if (strstr($header,'Location: ')) {
 			$this->requestRedirectUrl = substr($header, 10, strlen($header)-12);
+		}
+
 		return strlen($header);
 	}
 }
