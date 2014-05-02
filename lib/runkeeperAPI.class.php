@@ -27,7 +27,7 @@ class RunKeeperAPI {
 				$this->api_created = false;
 			}
 			else {
-				$values = Yaml::parse(file_get_contents($api_conf_file));
+				$values = Yaml::parse($api_conf_file);
 				$this->api_conf = json_decode(json_encode($values));
 				$this->client_id = $this->api_conf->App->client_id;
 				$this->client_secret = $this->api_conf->App->client_secret;
