@@ -10,6 +10,7 @@
 		"ext-curl": "*"
 	},
 	"autoload": {
-		"files": ["lib/runkeeperAPI.class.php"]
+		"files": ["lib/runkeeperAPI.class.php"],
+		"classmap": ["tests"]
 	}
 }
