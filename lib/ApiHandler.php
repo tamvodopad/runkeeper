@@ -8,7 +8,8 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * RunKeeper main class
  *
- * @author Ivo Kund <ivo@opus.ee>
+ * @author Original Author Pierre RASO - eX Nihili pierre@exnihili.com
+ * @see Forked from https://github.com/madewithlove/runkeeper
  */
 class ApiHandler
 {

@@ -28,7 +28,7 @@ See /usage/rk-api.sample.php
 
 ## ChangeLog :
 
-### v0.4 (2014-05-14)
+### v0.4.0 (2014-05-14)
 
 * Added namespace
 * Added proper composer auto-loading
