@@ -1,17 +1,19 @@
 {
-	"name": "madewithlove/runkeeper",
-	"type": "library",
+    "name": "opus-online/runkeeper",
+    "type": "library",
     "version": "0.4-dev",
     "minimum-stability": "dev",
-	"description": "PHP wrapper for Runkeeper Health Graph API",
-	"keywords": ["runkeeper"],
-	"homepage": "http://github.com/madewithlove/runkeeper",
-	"require": {
-		"symfony/yaml": "2.4.*",
-		"ext-json": "*",
-		"ext-curl": "*"
-	},
+    "description": "PHP wrapper for Runkeeper Health Graph API",
+    "keywords": ["runkeeper"],
+    "homepage": "http://github.com/madewithlove/runkeeper",
+    "require": {
+        "symfony/yaml": "2.4.*",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
     "autoload": {
-        "psr-4": { "opus\\payment\\": "lib/" }
+        "psr-4": {
+            "opus\\payment\\": "lib/"
+        }
     }
 }
