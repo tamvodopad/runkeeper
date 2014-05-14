@@ -6,6 +6,8 @@ PHP wrapper for Runkeeper Health Graph API
 
 **Author:** Pierre RASO - eX Nihili <pierre@exnihili.com>
 
+Fork from [madewithlove/runkeeper](https://github.com/madewithlove/runkeeper)
+
 ## Installation via Composer
 
 Add this to you `composer.json` file, in the require object;
@@ -25,6 +27,12 @@ After that, run `composer install` to install the RunKeeper API wrapper.
 See /usage/rk-api.sample.php
 
 ## ChangeLog :
+
+### v0.4 (2014-05-14)
+
+* Added namespace
+* Added proper composer auto-loading
+* Fixed code style, typos, potential php errors (undefined variable etc)
 
 ### v0.3.6 (2014-05-02)
 
