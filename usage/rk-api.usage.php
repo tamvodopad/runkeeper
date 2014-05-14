@@ -4,11 +4,9 @@ error_reporting(E_ERROR);
 // Include dependencies with composer
 require_once('../vendor/autoload.php');
 
-// Include the API wrapper
-require_once('../lib/runkeeperAPI.class.php');
 
 /* API initialization */
-$rkAPI = new RunKeeperAPI(
+$rkAPI = new \opus\runkeeper\ApiHandler(
 	__DIR__ . '/../config/rk-api.sample.yml'	/* api_conf_file */
 );
 if ($rkAPI->api_created == false) {
@@ -70,4 +68,3 @@ if ($_GET['code']) {
 		}
 	}
 }
-?>

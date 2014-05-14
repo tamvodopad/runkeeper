@@ -9,8 +9,7 @@
 		"ext-json": "*",
 		"ext-curl": "*"
 	},
-	"autoload": {
-		"files": ["lib/runkeeperAPI.class.php"],
-		"classmap": ["tests"]
-	}
+    "autoload": {
+        "psr-4": { "opus\\payment\\": "lib/" }
+    }
 }
