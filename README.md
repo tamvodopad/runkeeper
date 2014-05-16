@@ -33,6 +33,8 @@ See /usage/rk-api.sample.php
 * Added namespace
 * Added proper composer auto-loading
 * Fixed code style, typos, potential php errors (undefined variable etc)
+* Added GuzzleHttp to handle connections
+* Removed authentication, this is much better done with dedicated OAuth libraries (such as yii2-authclient or Zend_Oauth)
 
 ### v0.3.6 (2014-05-02)
 
