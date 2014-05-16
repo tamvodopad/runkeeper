@@ -1,7 +1,7 @@
 {
     "name": "opus-online/runkeeper",
     "type": "library",
-    "version": "0.4.0-dev2",
+    "version": "0.4.0-dev",
     "minimum-stability": "dev",
     "description": "PHP wrapper for Runkeeper Health Graph API",
     "keywords": ["runkeeper"],
