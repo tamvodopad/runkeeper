@@ -1,11 +1,11 @@
 {
-    "name": "opus-online/runkeeper",
+    "name": "tamvodopad/runkeeper",
     "type": "library",
     "version": "0.4.0-dev",
     "minimum-stability": "dev",
     "description": "PHP wrapper for Runkeeper Health Graph API",
     "keywords": ["runkeeper"],
-    "homepage": "http://github.com/onus-online/runkeeper",
+    "homepage": "https://github.com/tamvodopad/runkeeper",
     "require": {
         "symfony/yaml": "2.4.*",
         "guzzlehttp/guzzle": "~6.0",
