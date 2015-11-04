@@ -6,13 +6,13 @@ PHP wrapper for Runkeeper Health Graph API
 
 **Author:** Pierre RASO - eX Nihili <pierre@exnihili.com>
 
-Fork from [madewithlove/runkeeper](https://github.com/madewithlove/runkeeper)
+Fork from [opus-online/runkeeper](https://github.com/opus-online/runkeeper)
 
 ## Installation via Composer
 
 Add this to you `composer.json` file, in the require object;
 
-    "opus-online/runkeeper": "dev-master"
+    "tamvodopad/runkeeper": "dev-master"
 
 After that, run `composer install` to install the RunKeeper API wrapper.
 
